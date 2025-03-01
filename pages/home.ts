@@ -12,11 +12,11 @@ const router = express.Router();
  * @returns HTML string with statistics about the count of books, copies, authors and genres
  */
 async function show_home(): Promise<string> {
-  const booksCount = await Book.getBookCount();
-  const copiesCount = await BookInstance.getBookInstanceCount();
-  const availableCount = await BookInstance.getBookInstanceCount({ status: 'Available' });
-  const authorsCount = await Author.getAuthorCount();
-  const genresCount = await Genre.getGenreCount();
+  const booksCount = await Book.countDocuments()
+  const copiesCount = await BookInstance.countDocuments()
+  const availableCount = await BookInstance.countDocuments({ status: 'Available' })
+  const authorsCount = await Author.countDocuments()
+  const genresCount = await Genre.countDocuments()
 
   const msg = `
       <div>

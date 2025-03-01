@@ -63,6 +63,14 @@ BookInstanceSchema.statics.getBookInstanceCount = async function (filter?: Filte
 }
 
 /**
+ *  retrieves all books that are available.
+ * @returns an array of all books that are available.
+ */
+BookInstanceSchema.statics.findAvailableBooks = async function () {
+  return this.find({ status: 'Available' }).populate('book');
+};
+
+/**
  * Compile the schema into a model and export it.
  * The model is instantiated with the IBookInstance interface and 
  * the IBookInstanceModel interface. This is to ensure that the model 

@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import homeRouter from './pages/home';
-import availableRouter from './pages/books_status';
+import availableRouter from './pages/available';
 import bookRouter from './pages/books';
 import authorRouter from './pages/authors';
 import createBookRouter from './pages/create_book';

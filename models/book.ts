@@ -106,6 +106,13 @@ BookSchema.methods.saveBookOfExistingAuthorAndGenre = async function (author_fam
   return await this.save();  
 }
 
+BookSchema.statics.findBooksByTitle = async function (title: string) {
+  return this.find({ title: new RegExp(title, 'i') }).populate('author genre');
+};
+BookSchema.methods.findSimilarGenres = async function () {
+  return this.model('Book').find({ genre: { $in: this.genre } }).populate('author genre');
+};
+
 /**
  * Compile the schema into a model and export it.
  * The model is instantiated with the IBook interface and 

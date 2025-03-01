@@ -1,31 +1,23 @@
 import Book from '../models/book';
 import Author from '../models/author';
 import express from 'express';
+import bookService from '../services/bookService';
 
 const router = express.Router();
 
 
-const showBooks = async (): Promise<string[] | void> => {
-  try {
-    const books = await Book.getAllBooksWithAuthors('title author', {title: 1});
-    return books.map((b) => {
-      const authorName = new Author(b.author).name; // Assuming 'Author' returns the author's name
-      return `${b._id} : ${b.title} : ${authorName}`;
-    });
-  } catch (err) {
-    console.log('Could not get books ' + err);
-  }
-}
 /**
  * @route GET /books
- * @returns an array of strings, where each string contains the book ID, title, and author name
- * @returns - a message indicating that no books were found if an error occurs
+ * @group Book
+ * @returns an array of all books sorted by title
+ * @returns an error message if no books were found 
+ * or if there was an error processing the request
  */
-router.get('/', async (_, res) => {
+router.get('/', async (req, res) => {
   try {
-    const data = await showBooks();
-    res.send(data);
-  } catch {
+    const books = await bookService.getAllBooks();
+    res.json(books);
+  } catch (error) {
     res.send('No books found');
   }
 });
